@@ -17,11 +17,18 @@ public class Unit : MonoBehaviour
 
   public void Update()
   {
+
     Vector3 direction = target.position - transform.position;
     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
     //rb.rotation = angle;
     direction.Normalize();
     movement = direction;
+
+  }
+
+  private void OnDrawGizmosSelected()
+  {
+    Gizmos.DrawLine(transform.position, target.position);
   }
 
   private void FixedUpdate()
