@@ -13,7 +13,7 @@ public class Turret : MonoBehaviour
   float nextTimeToFire = 0;
   public Transform Shootpoint;
   public float Force;
-
+  public Vector3 shootOffset = Vector3.forward;
   // Start is called before the first frame update
   void Start()
   {
@@ -58,14 +58,15 @@ public class Turret : MonoBehaviour
   }
   void shoot()
   {
-    GameObject BulletIns = Instantiate(bullet, Shootpoint.position, Quaternion.identity);
+    GameObject BulletIns = Instantiate(bullet, Shootpoint.position , Quaternion.identity);
     BulletIns.GetComponent<Rigidbody2D>().AddForce(Direction * Force);
   }
   private void OnDrawGizmosSelected()
   {
+    Gizmos.color = Color.green;
     Gizmos.DrawWireSphere(transform.position, Range);
+    Gizmos.color = Color.yellow;
     Gizmos.DrawWireSphere(transform.position, .25f);
-
   }
 
 

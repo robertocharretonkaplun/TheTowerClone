@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1033e15b0b866524dad503b776f51b9b, type: 3}
+  m_Name: GameConfig
+  m_EditorClassIdentifier: 
+  Health: 5
+  Rounds: 50
+  Damage: 12
+  Speed: 1.2
+  CriticOportunity: 0.1
+  Distance: 1.1
+  DamageFromDistance: 1.57
+  CriticFactor: 1.2

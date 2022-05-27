@@ -38,5 +38,10 @@ public class Unit : MonoBehaviour
   void moveCharacter(Vector2 direction)
   {
     rb.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
+
+    if (Vector3.Distance(transform.position, target.position) <= 0.22f)
+    {
+      Destroy(gameObject);
+    }
   }
 }
