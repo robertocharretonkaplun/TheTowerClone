@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3203984996287062307}
   - component: {fileID: 9184901923493836880}
   m_Layer: 0
-  m_Name: Unit-Level2
+  m_Name: Unit-Level3
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3203984996287062308}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.4, y: 0.61, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1472417149908688792}
@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 3
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.8666667, g: 0.8354482, b: 0.14117646, a: 1}
+  m_Color: {r: 0.8666667, g: 0.14117646, b: 0.6136567, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a65df45c8ead070478e5f64b928d4efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: Unit-Level2
-  health: 1
-  moveSpeed: 0.8
+  Name: Unit-Level3
+  health: 3
+  moveSpeed: 0.1
   target: {fileID: 0}
 --- !u!50 &3203984996287062307
 Rigidbody2D:

@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Turret : MonoBehaviour
 {
+  public static Turret instance;
   public float Range;
+  public int CurrentLives = 5;
+  public int lives = 5;
   Transform Target;
   bool Detected = false;
   Vector2 Direction;
@@ -13,7 +16,24 @@ public class Turret : MonoBehaviour
   float nextTimeToFire = 0;
   public Transform Shootpoint;
   public float Force;
+  public float speed = 1.5f;
+  public bool isChildTurret = false;
   public Vector3 shootOffset = Vector3.forward;
+  public GameObject EnemyContainer;
+  Vector3 closeEnemyRef;
+
+  private void Awake()
+  {
+    if (instance != null)
+    {
+      return;
+    }
+    else
+    {
+      instance = this;
+    }
+  }
+
   // Start is called before the first frame update
   void Start()
   {
@@ -22,6 +42,20 @@ public class Turret : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
+
+    if (CurrentLives <= 0)
+    {
+      CurrentLives = 0;
+      Destroy(gameObject);
+      if (!isChildTurret)
+      {
+        Time.timeScale = 0;
+        SceneManagement.instance.ChangeToMainMenuScene();
+        return;
+      }
+    }
+
+
     if (Target != null)
     {
 
@@ -58,8 +92,10 @@ public class Turret : MonoBehaviour
   }
   void shoot()
   {
+    LevelManager.instance.CalculateCriticalFactor();
     GameObject BulletIns = Instantiate(bullet, Shootpoint.position , Quaternion.identity);
-    BulletIns.GetComponent<Rigidbody2D>().AddForce(Direction * Force);
+    BulletIns.GetComponent<Rigidbody2D>().AddForce(Direction * Force * speed);
+    LevelManager.instance.Damage = LevelManager.instance.oldDamage;
   }
   private void OnDrawGizmosSelected()
   {
@@ -67,12 +103,15 @@ public class Turret : MonoBehaviour
     Gizmos.DrawWireSphere(transform.position, Range);
     Gizmos.color = Color.yellow;
     Gizmos.DrawWireSphere(transform.position, .25f);
+    Gizmos.color = Color.cyan;
+    Gizmos.DrawLine(transform.position, closeEnemyRef);
   }
 
 
   void
   UpdateTarget()
   {
+    
     // Set a reference to the list of enemies in the game
     GameObject[] enemies = GameObject.FindGameObjectsWithTag("Unit");
     float shortDistance = Mathf.Infinity;
@@ -82,11 +121,17 @@ public class Turret : MonoBehaviour
     {
       // Get the distance from the enemy position and the turret position
       float distance = Vector3.Distance(transform.position, enemy.transform.position);
+
+      if (isChildTurret && distance <= 0.35f)
+      {
+        Destroy(gameObject);
+      }
       // Check what enemy is closer and set it as the principal enemu
       if (distance < shortDistance)
       {
         shortDistance = distance;
         closeEnemy = enemy;
+        closeEnemyRef = enemy.transform.position;
       }
     }
     // Check that the enemy that is closer to the turret became the main target

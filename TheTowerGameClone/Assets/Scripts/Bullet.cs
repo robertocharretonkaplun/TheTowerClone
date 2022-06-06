@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class
 Bullet : MonoBehaviour
 {
@@ -10,7 +9,7 @@ Bullet : MonoBehaviour
   public float speed = 1.0f;
 
   public GameObject destroyEffect;
-
+  
   // Update is called once per frame
   void
   Update()
@@ -57,8 +56,14 @@ Bullet : MonoBehaviour
   private void
   Hit()
   {
-    // Add 1 point to the player to be able to create more turrets
-    //LevelManager.instance.points += 1;
+    if (target.gameObject.tag == "Unit-Level1")
+    {
+      LevelManager.instance.gold += 1;
+    }
+    if (target.gameObject.name == "Unit-Level2")
+    {
+      LevelManager.instance.gold += 2;
+    }
     // Remove one enemy from the enemy counter
     //LevelManager.instance.amounOfEnemies--;
     // Generate a new partecle from each enemy target that dies

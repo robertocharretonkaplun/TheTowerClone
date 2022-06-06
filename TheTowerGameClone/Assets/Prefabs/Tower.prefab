@@ -390,3 +390,6 @@ MonoBehaviour:
   FireRate: 1
   Shootpoint: {fileID: 1048465032331163752}
   Force: 500
+  speed: 1.5
+  shootOffset: {x: 0, y: 0, z: 1}
+  EnemyContainer: {fileID: 0}

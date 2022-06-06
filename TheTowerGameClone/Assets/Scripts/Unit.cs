@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-  public int health = 200;
+  public string Name = "Unit-Level1";
+  public float health = 1;
   public float moveSpeed = 100f;
   private Rigidbody2D rb;
   private Vector2 movement;
@@ -17,7 +18,10 @@ public class Unit : MonoBehaviour
 
   public void Update()
   {
-
+    if (target == null)
+    {
+      return;
+    }
     Vector3 direction = target.position - transform.position;
     float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
     //rb.rotation = angle;
@@ -41,6 +45,7 @@ public class Unit : MonoBehaviour
 
     if (Vector3.Distance(transform.position, target.position) <= 0.22f)
     {
+      target.GetComponent<Turret>().CurrentLives--;
       Destroy(gameObject);
     }
   }

@@ -14,10 +14,10 @@ public enum Wavephase
 public class Spawner : MonoBehaviour
 {
   // General Wave Attributes
-  public Transform[] SpawnPoints;
+  public static Transform[] SpawnPoints;
   public GameObject[] Enemies;
   public Transform target;
-
+  public ProgressBar progressBar;
   // Wave Customisation
   private int WaveIndex = 0;
   public int WaveLimit = 25;
@@ -28,11 +28,21 @@ public class Spawner : MonoBehaviour
   // Wave internal Attributes
   public Wavephase wavephase;
 
+  private void Awake()
+  {
+    // Initialize the array of point
+    SpawnPoints = new Transform[transform.childCount];
+
+    // Set all the child points
+    for (int i = 0; i < SpawnPoints.Length; i++)
+    {
+      SpawnPoints[i] = transform.GetChild(i);
+    }
+  }
 
   // Start is called before the first frame update
   void Start()
   {
-
     // Init Wavephase
     wavephase = Wavephase.PHASE_1;
 
@@ -56,7 +66,7 @@ public class Spawner : MonoBehaviour
     }
 
     timer -= Time.deltaTime;
-
+    progressBar.current = timer;
   }
 
 
@@ -70,22 +80,22 @@ public class Spawner : MonoBehaviour
         wavephase = Wavephase.PHASE_2;
         break;
       case Wavephase.PHASE_2:
-        enemiesPerWave *= 2;
+        enemiesPerWave += 2;
         WaveIndex++;
         wavephase = Wavephase.PHASE_3;
         break;
       case Wavephase.PHASE_3:
-        enemiesPerWave *= 2;
+        enemiesPerWave += 2;
         WaveIndex++;
         wavephase = Wavephase.PHASE_4;
         break;
       case Wavephase.PHASE_4:
-        enemiesPerWave *= 2;
+        enemiesPerWave += 2;
         WaveIndex++;
         wavephase = Wavephase.PHASE_5;
         break;
       case Wavephase.PHASE_5:
-        enemiesPerWave *= 2;
+        enemiesPerWave += 2;
         WaveIndex++;
         break;
       default:
@@ -105,8 +115,7 @@ public class Spawner : MonoBehaviour
     int randomEnemy = Random.Range(0, Enemies.Length);
     int randomPoints = Random.Range(0, SpawnPoints.Length);
     Enemies[randomEnemy].GetComponent<Unit>().target = target;
-    Instantiate(Enemies[randomEnemy], SpawnPoints[randomPoints].position, transform.rotation);
-
+    var enemy = Instantiate(Enemies[randomEnemy], SpawnPoints[randomPoints].position, transform.rotation);
   }
 
 }

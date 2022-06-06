@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FixedBullet : MonoBehaviour
 {
+
   //public float moveSpeed = 100f;
   //private Rigidbody2D rb;
   //private Vector2 movement;
@@ -60,10 +61,32 @@ public class FixedBullet : MonoBehaviour
   //
   //}
 
+  private void Update()
+  {
+    Destroy(gameObject, 2.5f);
+  }
+
 
   private void OnCollisionEnter2D(Collision2D collision)
   {
-    Destroy(collision.gameObject);
+    collision.gameObject.GetComponent<Unit>().health -= LevelManager.instance.Damage;
+
+    if (collision.gameObject.GetComponent<Unit>().health < 1 && collision.gameObject.GetComponent<Unit>().Name == "Unit-Level1")
+    {
+      LevelManager.instance.gold += 1;
+    }
+    if (collision.gameObject.GetComponent<Unit>().health < 1 && collision.gameObject.GetComponent<Unit>().Name == "Unit-Level2")
+    {
+      LevelManager.instance.gold += 2;
+    }
+    if (collision.gameObject.GetComponent<Unit>().health < 1 && collision.gameObject.GetComponent<Unit>().Name == "Unit-Level3")
+    {
+      LevelManager.instance.gold += 4;
+    }
+    if (collision.gameObject.GetComponent<Unit>().health < 1)
+    {
+      Destroy(collision.gameObject);
+    }
     Destroy(gameObject);
   }
 }
