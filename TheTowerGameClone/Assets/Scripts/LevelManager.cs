@@ -8,9 +8,6 @@ public class LevelManager : MonoBehaviour
 
   public int gold;
   
-  
-
-
   public float Damage = 1;
   public  float oldDamage;
   public float bulletDamage = 1;

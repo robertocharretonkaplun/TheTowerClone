@@ -37,7 +37,7 @@ public class GameStore : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    ViewDistanceValue = Turret.instance.Range;
+    ViewDistanceValue = Turret.instance.ViewDistance;
     ViewDistanceValue_text.text = ViewDistanceValue.ToString();
     ViewDistanceCost_text.text = ViewDistanceCost.ToString();
     // Update Critical Factor text ref
@@ -90,11 +90,11 @@ public class GameStore : MonoBehaviour
     {
       LevelManager.instance.oldDamage = LevelManager.instance.Damage;
       LevelManager.instance.gold -= ViewDistanceCost;
-      Turret.instance.Range += .05f;
+      Turret.instance.ViewDistance += .05f;
       ViewDistance.localScale += new Vector3(.15f, .15f, 0);
       ViewDistanceCost += 2;
 
-      ViewDistanceValue = Turret.instance.Range;
+      ViewDistanceValue = Turret.instance.ViewDistance;
       // Update text ref
       ViewDistanceValue_text.text = ViewDistanceValue.ToString();
       ViewDistanceCost_text.text = ViewDistanceCost.ToString();

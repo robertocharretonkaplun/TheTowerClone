@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Turret : MonoBehaviour
 {
+  // Instance of the class
+  [Header("Turret Attributes")]
   public static Turret instance;
-  public float Range;
-  public int CurrentLives = 5;
-  public int lives = 5;
-  Transform Target;
-  bool Detected = false;
-  Vector2 Direction;
-  public GameObject Gun;
-  public GameObject bullet;
-  public float FireRate;
-  float nextTimeToFire = 0;
   public Transform Shootpoint;
+  public GameObject bullet;
+
+  [Header("Turret Properties")]
+  public int lives = 5;
+  public int CurrentLives = 5;
+  public float ViewDistance;
+  public float FireRate;
   public float Force;
   public float speed = 1.5f;
   public bool isChildTurret = false;
-  public Vector3 shootOffset = Vector3.forward;
-  public GameObject EnemyContainer;
-  Vector3 closeEnemyRef;
+
+  private float nextTimeToFire = 0;
+  private Transform Target;
+  private Vector3 closeEnemyRef;
+  private Vector2 Direction;
+  private bool Detected = false;
 
   private void Awake()
   {
@@ -42,7 +44,7 @@ public class Turret : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-
+    // Live config
     if (CurrentLives <= 0)
     {
       CurrentLives = 0;
@@ -55,13 +57,13 @@ public class Turret : MonoBehaviour
       }
     }
 
-
+    // Enemy Detection
     if (Target != null)
     {
 
       Vector2 targetPos = Target.position;
       Direction = targetPos - (Vector2)transform.position;
-      RaycastHit2D rayInfo = Physics2D.Raycast(transform.position, Direction, Range);
+      RaycastHit2D rayInfo = Physics2D.Raycast(transform.position, Direction, ViewDistance);
       if (rayInfo)
       {
         if (rayInfo.collider.gameObject.tag == "Unit")
@@ -93,16 +95,20 @@ public class Turret : MonoBehaviour
   void shoot()
   {
     LevelManager.instance.CalculateCriticalFactor();
-    GameObject BulletIns = Instantiate(bullet, Shootpoint.position , Quaternion.identity);
+    GameObject BulletIns = Instantiate(bullet, Shootpoint.position, Quaternion.identity);
     BulletIns.GetComponent<Rigidbody2D>().AddForce(Direction * Force * speed);
+    //AudioManager.instance.SetAudioClipForEffects(new AudioSource(), AudioClips_Effects.BULLET);
     LevelManager.instance.Damage = LevelManager.instance.oldDamage;
   }
   private void OnDrawGizmosSelected()
   {
+    // Draw View Distance
     Gizmos.color = Color.green;
-    Gizmos.DrawWireSphere(transform.position, Range);
+    Gizmos.DrawWireSphere(transform.position, ViewDistance);
+    // Draw View Draw collision Area
     Gizmos.color = Color.yellow;
     Gizmos.DrawWireSphere(transform.position, .25f);
+    // Draw View Draw Enemy distance from player
     Gizmos.color = Color.cyan;
     Gizmos.DrawLine(transform.position, closeEnemyRef);
   }
@@ -111,7 +117,7 @@ public class Turret : MonoBehaviour
   void
   UpdateTarget()
   {
-    
+
     // Set a reference to the list of enemies in the game
     GameObject[] enemies = GameObject.FindGameObjectsWithTag("Unit");
     float shortDistance = Mathf.Infinity;
@@ -122,6 +128,7 @@ public class Turret : MonoBehaviour
       // Get the distance from the enemy position and the turret position
       float distance = Vector3.Distance(transform.position, enemy.transform.position);
 
+      // Destroy baby turret
       if (isChildTurret && distance <= 0.35f)
       {
         Destroy(gameObject);
@@ -135,7 +142,7 @@ public class Turret : MonoBehaviour
       }
     }
     // Check that the enemy that is closer to the turret became the main target
-    if (closeEnemy != null && shortDistance <= Range)
+    if (closeEnemy != null && shortDistance <= ViewDistance)
     {
       Target = closeEnemy.transform;
     }

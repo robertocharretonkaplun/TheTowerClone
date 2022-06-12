@@ -130,18 +130,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 967170c2f11907342ae5fa09a30c3d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Range: 0.75
-  CurrentLives: 5
-  lives: 1
-  Gun: {fileID: 0}
-  bullet: {fileID: 692699921499431995, guid: 739969a8a9026d143b6bf2103d1b8fe7, type: 3}
-  FireRate: 1
   Shootpoint: {fileID: 1513567991093980299}
+  bullet: {fileID: 692699921499431995, guid: 739969a8a9026d143b6bf2103d1b8fe7, type: 3}
+  lives: 1
+  CurrentLives: 1
+  ViewDistance: 0.8
+  FireRate: 1
   Force: 300
   speed: 1.5
   isChildTurret: 1
-  shootOffset: {x: 0, y: 0, z: 1}
-  EnemyContainer: {fileID: 0}
 --- !u!1 &7841780444541823859
 GameObject:
   m_ObjectHideFlags: 0
