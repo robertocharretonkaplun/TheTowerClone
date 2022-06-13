@@ -47,14 +47,14 @@ public class Turret : MonoBehaviour
     // Live config
     if (CurrentLives <= 0)
     {
-      CurrentLives = 0;
-      Destroy(gameObject);
       if (!isChildTurret)
       {
-        Time.timeScale = 0;
         SceneManagement.instance.ChangeToMainMenuScene();
+        Time.timeScale = 0;
         return;
       }
+      CurrentLives = 0;
+      Destroy(gameObject);
     }
 
     // Enemy Detection
